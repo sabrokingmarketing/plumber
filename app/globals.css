@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* Brand design system. All colours pass WCAG AA where used for text. */
+:root {
+  --brand: #ff6a00; /* modern orange: buttons + highlights (black text on it: 6.6:1) */
+  --brand-hover: #ff7f24;
+  --brand-ink: #c2410c; /* orange text on white (5.2:1) */
+  --brand-soft: #fff1e6; /* soft orange tint */
+  --ink: #111111; /* brand black */
+  --ink-soft: #1d1d1f; /* headings */
+  --muted: #6e6e73; /* secondary text on white (5.1:1) */
+  --surface: #ffffff;
+  --surface-2: #f5f5f7; /* light grey sections */
+  --night: #0b0b0c; /* near-black sections */
+  --night-muted: #a1a1a6; /* secondary text on night (7.7:1) */
+  --line: #e5e5ea;
+  --line-dark: #2a2a2d;
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-night: var(--night);
+  --color-night-muted: var(--night-muted);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-dark);
+  --font-sans: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Headline style: big, tight, confident */
+.headline {
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.lede {
+  text-wrap: pretty;
+}
+
+/* Scroll reveal: content is always visible without JavaScript.
+   The "js" class is added by a tiny script in the layout. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms ease-out,
+    transform 600ms ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Gentle hover on photos */
+.zoom-img img {
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.zoom-img:hover img {
+  transform: scale(1.02);
+}
+
+/* Trusted-by logo loop (only shown when client logos exist) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .zoom-img img {
+    transition: none;
+  }
+  .zoom-img:hover img {
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-duplicate {
+    display: none;
+  }
+}
